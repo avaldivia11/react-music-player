@@ -9,6 +9,12 @@
   width: 300px;
  
 } */
+.active{
+  color: #255784;
+  background: #2196f3;
+  box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3;
+  
+}
 .botones{
   position: relative;
   display: inline-block;
@@ -22,6 +28,7 @@
   transition: 0.2s; 
   margin: 10px;
   width: 40%;
+  
 }
 .botones:hover{
   color: #255784;

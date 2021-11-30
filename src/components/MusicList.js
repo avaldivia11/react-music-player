@@ -5,18 +5,19 @@ const MusicList = () => {
   const [songMap, setSongMap] = useState({});
   const [setId, setSetId] = useState(1);
   const [condicion, setCondicion] = useState(false);
+  const [playList, setPlaylist] = useState("");
+  const [songs, setSongs] = useState([]);
 
   let audioRef = useRef();
 
-  const [songs, setSongs] = useState([]);
 
   useEffect(() => {
     getSongs(url);
-  });
+  },[]);
 
   const getSongs = async () => {
     try {
-      const response = await fetch("https://assets.breatheco.de/apis/sound/songs", {
+      const response = await fetch(url, {
         method: "GET",
         headers: {
           "Content-Type": "aplication/json",
@@ -34,7 +35,7 @@ const MusicList = () => {
     }
   };
 
-  const [playList, setPlaylist] = useState("");
+
 
   const reproducir = (url) => {
     if (
@@ -48,9 +49,8 @@ const MusicList = () => {
     }
     setCondicion(true);    
   };
-  const pausar = (url) => {
-    /*  audioRef.current.src = "https://assets.breatheco.de/apis/sound/" + url; */
-    audioRef.current.pause(true);
+  const pausar = () => {
+    audioRef.current.pause();
     setCondicion(false);
   };
 
@@ -59,6 +59,8 @@ const MusicList = () => {
     audioRef.current.src = "https://assets.breatheco.de/apis/sound/" + nextSong;
     setPlaylist(songs);
     setSetId(songMap[id + 1] ? id + 1 : 1);
+
+
     audioRef.current.play();
   };
   const prev = (id, songs) => {
@@ -78,18 +80,12 @@ const MusicList = () => {
               <div className="musiclist" key={index}>
                 <button
                   type="button"
-                  className={`botones list-group-item rounded-pill list-group-item-primary ${
-                    song.id === setId && "active"
-                  }`}
-                  onClick={() => {
+                  className={`botones mb-5 list-group-item rounded-pill list-group-item-primary ${song.id === setId && "active"}`}onClick={() => { 
                     reproducir(song.url);
                     setPlaylist(song.url);
-                    setSetId(song.id);
-                  }}
-                >
-                  {song.name}
+                    setSetId(song.id)}}>
+                    {song.name}
                 </button>
-
                 <audio id="player" src="" ref={audioRef} />
               </div>
             );
